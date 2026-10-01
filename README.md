@@ -6,6 +6,7 @@ object storage, dbt for Snowflake transformations, and Brevo SMTP for pipeline
 completion notifications.
 
 ## Architecture
+images/architecture.png
 
 The scheduled Airflow DAG, `NYC_taxi`, runs this chain:
 
