@@ -105,7 +105,7 @@ docker compose exec airflow-scheduler airflow connections add smtp \
 	--conn-password "$(docker compose exec airflow-scheduler printenv BREVO_SMTP_KEY)" \
 	--conn-extra '{"disable_ssl": true, "from_email": "your-email@example.com"}'
 ```
-![Email](./images/email.png)
+![Email](./images/email.jpg)
 
 The backslash must be the final character on each continued shell line. Do not
 use `smtp_default` unless the DAG is changed to use that connection ID.
