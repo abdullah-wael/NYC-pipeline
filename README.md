@@ -6,7 +6,7 @@ object storage, dbt for Snowflake transformations, and Brevo SMTP for pipeline
 completion notifications.
 
 ## Architecture
-images/architecture.png
+![Architecture](./images/architecture.png)
 
 The scheduled Airflow DAG, `NYC_taxi`, runs this chain:
 
@@ -140,31 +140,5 @@ docker compose exec airflow-scheduler airflow tasks list NYC_taxi
 - `dbt_project/nyc_taxi` builds silver views and gold tables in Snowflake,
 	including trip, location, and date models.
 - `dbt_project/nyc_taxi/tests` contains dbt data-quality tests.
-
-## Useful commands
-
-Stop services without deleting persistent volumes:
-
-```bash
-docker compose down
-```
-
-Remove services and their persistent volumes, including Airflow metadata and
-MinIO data:
-
-```bash
-docker compose down -v
-```
-
-Run dbt interactively:
-
-```bash
-docker compose exec dbt bash
-cd /usr/app/dbt_project/nyc_taxi
-dbt deps --profiles-dir .
-dbt run --profiles-dir .
-dbt test --profiles-dir .
-```
-
-The volume-removal command is destructive. Use it only when a clean local
-environment is intended.
+  Dag run :
+  ![dag](./images/dag_image.png)
