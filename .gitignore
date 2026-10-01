@@ -1,0 +1,8 @@
+.env
+profiles.yml
+target/
+test.ipynb
+venv/
+data/
+*.log
+logs/

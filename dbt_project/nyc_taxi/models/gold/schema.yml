@@ -1,0 +1,41 @@
+version: 2
+models:
+  - name: dim_date
+    columns:
+      - name: datetime_key
+        description: "The surrogate key for the date dimension"
+        tests:
+          - not_null
+          - unique
+  - name: dim_location
+    columns:
+      - name: location_key
+        description: "The surrogate key for the location dimension"
+        tests:
+          - not_null
+          - unique
+  - name: fact_trips
+    columns:
+      - name: trip_key
+        description: "The surrogate key for the trip fact table"
+        tests:
+          - not_null
+          - unique
+      - name: pickup_datetime_key
+        description: "The surrogate key for the pickup datetime"
+        data_test:
+          relationships:
+            to: ref('dim_date')
+            field: datetime_key
+      - name: dropoff_datetime_key
+        description: "The surrogate key for the dropoff datetime"
+        data_test:
+          relationships:
+            to: ref('dim_date')
+            field: datetime_key
+      - name: pulocationid
+        description: "The pickup location id"
+        data_test:
+          relationships:
+            to: ref('dim_location')
+            field: locationid

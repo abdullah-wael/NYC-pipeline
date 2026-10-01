@@ -1,0 +1,33 @@
+FROM apache/airflow:3.1.8-python3.12
+
+USER root
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        openjdk-17-jdk-headless \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+RUN python -m venv /home/airflow/dbt_venv && \
+    /home/airflow/dbt_venv/bin/pip install --no-cache-dir dbt-snowflake
+
+RUN curl -fL --retry 5 --retry-delay 2 \
+    -o /opt/airflow/hadoop-aws-3.3.4.jar \
+    https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.4/hadoop-aws-3.3.4.jar
+
+RUN curl -fL --retry 5 --retry-delay 2 \
+    -o /opt/airflow/aws-java-sdk-bundle-1.12.262.jar \
+    https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.262/aws-java-sdk-bundle-1.12.262.jar
+RUN curl -fL --retry 5 --retry-delay 2 \
+    -o /opt/airflow/spark-snowflake_2.12-3.2.2-spark_3.5.jar \
+    https://repo1.maven.org/maven2/net/snowflake/spark-snowflake_2.12/3.2.2-spark_3.5/spark-snowflake_2.12-3.2.2-spark_3.5.jar
+RUN curl -fL --retry 5 --retry-delay 2 \
+    -o /opt/airflow/snowflake-jdbc-4.0.2.jar \
+    https://repo1.maven.org/maven2/net/snowflake/snowflake-jdbc/4.0.2/snowflake-jdbc-4.0.2.jar
+
+USER airflow
+
+COPY requirements-airflow.txt /requirements-airflow.txt
+
+RUN pip install --no-cache-dir -r /requirements-airflow.txt

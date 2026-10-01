@@ -1,0 +1,46 @@
+version: 2
+sources:
+  - name: yellow_taxi
+    description: "This is the source data for the NYC taxi project"
+    database: yellow_taxi
+    schema: data_schema
+    tables:
+      - name: transformed_trips
+        columns:
+          - name: vendorid
+          - name: tpep_pickup_datetime
+          - name: tpep_dropoff_datetime
+          - name: passenger_count
+          - name: trip_distance
+          - name: ratecodeid
+          - name: store_and_fwd_flag
+          - name: pulocationid
+          - name: dolocationid
+          - name: payment_type
+          - name: fare_amount
+          - name: extra
+          - name: mta_tax
+          - name: tip_amount
+          - name: tolls_amount
+          - name: improvement_surcharge
+          - name: total_amount
+          - name: congestion_surcharge
+          - name: airport_fee
+          - name: cbd_congestion_fee
+          - name: recalculated_total_amount
+
+      - name: locations
+        columns:
+          - name: locationid
+            tests:
+              - not_null
+              - unique
+          - name: borough
+            tests:
+              - not_null
+          - name: zone
+            tests:
+              - not_null
+          - name: service_zone
+            tests:
+              - not_null
